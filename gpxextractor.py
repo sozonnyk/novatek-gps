@@ -8,6 +8,8 @@
 #
 
 import os, struct, sys, re
+from datetime import datetime, timezone
+from tzlocal import get_localzone
 
 class GpxExtractor:
 
@@ -22,7 +24,8 @@ class GpxExtractor:
 		return matches
 
 	def fix_time(self, hour, minute, second, year, month, day):
-		return "%d-%02d-%02dT%02d:%02d:%02dZ" % ((year + 2000), int(month), int(day), int(hour), int(minute), int(second))
+		time = datetime((year + 2000), int(month), int(day), int(hour), int(minute), int(second), tzinfo = get_localzone())
+		return time.astimezone(timezone.utc).isoformat()
 
 
 	def fix_coordinates(self, hemisphere, coordinate):

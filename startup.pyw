@@ -54,6 +54,11 @@ for orphan_gpx_file in orphan_gpx_files:
 gpx_extractor = GpxExtractor()
 	
 for orphan_mp4_file in orphan_mp4_files:
-	gpx_extractor.process_file(orphan_mp4_file)
+	try:
+		gpx_extractor.process_file(orphan_mp4_file)
+	except Exception as e:
+		print("Bad File: %s" % orphan_mp4_file)
+		print(e)
+		pass
 	
 start_viewer()
